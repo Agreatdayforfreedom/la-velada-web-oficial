@@ -9,7 +9,7 @@ interface Props {
 const { boxers, class: className = "" } = Astro.props
 ---
 
-<div class:list={`flex flex-col ${className}`}>
+<div class:list={`group ${className}`}>
 	{
 		boxers.map(({ id, name, country, countryName, weight }) => (
 			<a
@@ -69,5 +69,35 @@ const { boxers, class: className = "" } = Astro.props
 	.boxer-link.active .boxer-link-background,
 	.boxer-link:hover .boxer-link-background {
 		filter: brightness(0.5);
+	}
+
+	.group {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		width: fit-content;
+		justify-content: space-between;
+		white-space: nowrap;
+		gap: 10px;
+	}
+
+	@media (width>780px) {
+		.group {
+			display: grid;
+			grid-template-columns: repeat(2, 150px);
+			width: 300px;
+			height: auto;
+			grid-auto-flow: dense;
+		}
+
+		.group:nth-child(odd) > a:nth-child(odd) {
+			grid-column: 2;
+			margin-top: 15px;
+		}
+		.group:nth-child(even) > a:nth-child(odd) {
+			margin-top: 15px;
+		}
+		.group:nth-child(even) {
+			place-self: end;
+		}
 	}
 </style>

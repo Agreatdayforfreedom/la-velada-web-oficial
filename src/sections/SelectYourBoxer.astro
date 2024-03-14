@@ -10,13 +10,7 @@ const listOfBoxers = BOXERS.map((boxer) => {
 	return { ...boxer, countryName }
 })
 
-// split in 4 columns
-const boxerColumns = [
-	listOfBoxers.slice(0, 3),
-	listOfBoxers.slice(3, 6),
-	listOfBoxers.slice(6, 9),
-	listOfBoxers.slice(9, 12),
-]
+const boxerGroups = [listOfBoxers.slice(0, 6), listOfBoxers.slice(6, 12)]
 ---
 
 <section class="my-40 hidden md:block">
@@ -83,20 +77,10 @@ const boxerColumns = [
 				/>
 			</header>
 		</article>
-		<div class="boxers-nav flex w-full justify-between">
-			<aside class="boxers-aside flex justify-start">
-				<nav class="flex h-full gap-2 py-4">
-					<ColumnBoxers boxers={boxerColumns[0]} />
-					<ColumnBoxers boxers={boxerColumns[1]} class="mt-4" />
-				</nav>
-			</aside>
+		<div class="boxers-nav container flex w-full justify-between">
+			<ColumnBoxers boxers={boxerGroups[0]} />
 
-			<aside class="boxers-aside flex justify-end">
-				<nav class="flex h-full justify-end gap-2 py-4">
-					<ColumnBoxers boxers={boxerColumns[2]} class="mt-4" />
-					<ColumnBoxers boxers={boxerColumns[3]} />
-				</nav>
-			</aside>
+			<ColumnBoxers boxers={boxerGroups[1]} />
 		</div>
 	</div>
 </section>
@@ -158,6 +142,25 @@ const boxerColumns = [
 </script>
 
 <style>
+	.container {
+		display: grid;
+		width: 100%;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+		overflow-x: scroll;
+		overflow-y: hidden;
+	}
+
+	@media (width>780px) {
+		.container {
+			display: grid;
+			width: 100%;
+			overflow: hidden;
+			grid-template-columns: repeat(2, 1fr);
+			height: auto;
+		}
+	}
+
 	.boxers-aside {
 		@apply relative h-32 w-screen overflow-x-scroll;
 		scrollbar-width: none;
